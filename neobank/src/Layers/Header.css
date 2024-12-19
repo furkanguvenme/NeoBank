@@ -1,0 +1,3 @@
+.navigation {
+  @apply hidden lg:block no-underline text-xl text-lime-600 font-bold;
+}
