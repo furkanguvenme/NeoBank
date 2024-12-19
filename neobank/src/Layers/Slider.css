@@ -1,0 +1,76 @@
+.slider-container {
+  position: relative;
+  width: 80%;
+  height: 40%;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative; /* Metnin doğru konumlanması için gerekli */
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.slide p {
+  position: absolute;
+  top: 20%; /* Top konumunu sabitliyoruz */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 50px;
+  font-family: "Roboto", serif;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10;
+}
+
+.slide:nth-child(1) p {
+  top: 20%;
+}
+
+.slide:nth-child(2) p {
+  top: 30%;
+}
+
+.slide:nth-child(3) p {
+  top: 40%;
+}
+
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
