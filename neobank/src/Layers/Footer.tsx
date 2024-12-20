@@ -1,0 +1,20 @@
+import { FaLinkedin } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { BiLogoGmail } from "react-icons/bi";
+
+export const Footer = () => {
+  return (
+    <footer className="w-4/5 flex flex-row justify-between items-center my-10">
+        <nav className="flex flex-col gap-5">
+            <a href="#">Hakkımda</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Şartları</a>
+        </nav>
+        <nav className="flex flex-row gap-6 text-3xl">
+            <a href="#"><FaLinkedin /></a>
+            <a href="#"><CgProfile /></a>
+            <a href="#"><BiLogoGmail /></a>
+        </nav>
+    </footer>
+  )
+}

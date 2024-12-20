@@ -1,7 +1,7 @@
 .slider-container {
   position: relative;
   width: 80%;
-  height: 40%;
+  height: 250px;
   margin: 0 auto;
   overflow: hidden;
   border: 2px solid #ccc;
@@ -16,25 +16,24 @@
 .slide {
   min-width: 100%;
   box-sizing: border-box;
-  position: relative; /* Metnin doğru konumlanması için gerekli */
+  position: relative;
 }
 
 .slide img {
   width: 100%;
-  height: auto;
+  height: 250px;
   display: block;
 }
 
 .slide p {
   position: absolute;
-  top: 20%; /* Top konumunu sabitliyoruz */
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
-  font-size: 50px;
   font-family: "Roboto", serif;
   font-weight: bold;
   text-align: center;
@@ -42,15 +41,15 @@
 }
 
 .slide:nth-child(1) p {
-  top: 20%;
+  top: 33%;
 }
 
 .slide:nth-child(2) p {
-  top: 30%;
+  top: 43%;
 }
 
 .slide:nth-child(3) p {
-  top: 40%;
+  top: 53%;
 }
 
 .prev-btn,

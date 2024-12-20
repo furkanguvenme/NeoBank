@@ -1,4 +1,5 @@
 import logo from '../assets/logo.png';
+import logok from '../assets/logok.png';
 import { HiHome } from "react-icons/hi2";
 import { FcAbout } from "react-icons/fc";
 import { GiProcessor } from "react-icons/gi";
@@ -9,7 +10,8 @@ export const Header = () => {
   return (
     <>
     <div className='flex flex-row items-center w-4/5 h-1/6 justify-between'>
-        <img src={logo}/>
+        <img className='lg:block hidden' src={logo}/>
+        <img className="lg:hidden block scale-50" src={logok}/>
         <nav className="flex flex-row gap-5 lg:gap-10 items-center">
             <a className='navigation' href='#'>Ana Sayfa</a>
             <HiHome className='lg:hidden'/>
