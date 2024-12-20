@@ -58,7 +58,7 @@ const Slider: React.FC = () => {
         {slidesData.map((slide) => (
           <div className="slide" key={slide.id}>
             <img src={slide.imageUrl} alt={`Slide ${slide.id}`} />
-            <p>{slide.text1}</p>
+            <p className='lg:text-4xl text-base'>{slide.text1}</p>
           </div>
         ))}
       </div>

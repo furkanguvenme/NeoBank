@@ -4,6 +4,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(85, 107, 47, 0.2);
   font-family: "Roboto", serif;
 }
