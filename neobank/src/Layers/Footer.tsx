@@ -12,8 +12,8 @@ export const Footer = () => {
         </nav>
         <nav className="flex flex-col lg:flex-row gap-6 text-3xl">
             <a href="https://www.linkedin.com/in/devfurkang/" target="_blank"><FaLinkedin /></a>
-            <a href="#"><CgProfile /></a>
-            <a href="#"><BiLogoGmail /></a>
+            <a href="https://personal-website-sepia-one-96.vercel.app/" target="_blank"><CgProfile /></a>
+            <a href="mailto:furkanguven.dev@gmail.com"><BiLogoGmail /></a>
         </nav>
     </footer>
   )
