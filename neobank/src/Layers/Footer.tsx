@@ -10,8 +10,8 @@ export const Footer = () => {
             <a href="#">Gizlilik Politikası</a>
             <a href="#">Kullanım Şartları</a>
         </nav>
-        <nav className="flex flex-row gap-6 text-3xl">
-            <a href="#"><FaLinkedin /></a>
+        <nav className="flex flex-col lg:flex-row gap-6 text-3xl">
+            <a href="https://www.linkedin.com/in/devfurkang/" target="_blank"><FaLinkedin /></a>
             <a href="#"><CgProfile /></a>
             <a href="#"><BiLogoGmail /></a>
         </nav>

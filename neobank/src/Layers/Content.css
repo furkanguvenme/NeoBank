@@ -1,0 +1,3 @@
+.content {
+  @apply bg-lime-600 w-full h-44 rounded-2xl;
+}
