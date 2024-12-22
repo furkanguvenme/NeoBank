@@ -1,16 +1,15 @@
-import './App.css'
-import { Route, Switch } from "react-router-dom";
+import './App.css';
+import { Routes, Route } from "react-router-dom";
 import { Home } from './Components/Home';
+import { Simple } from './Components/Simple';
 
 function App() {
-
   return (
-    <Switch>
-      <Route path='/'>
-        <Home/>
-      </Route>
-    </Switch>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/simple" element={<Simple />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
