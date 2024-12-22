@@ -15,7 +15,10 @@ export const Simple = () => {
     <>
         <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
-            Simple
+            <div className="w-4/5 h-3/5 grid grid-cols-2 gap-6">
+                <div className="bg-black w-full h-[70vh]"></div>
+                <div className="bg-black w-full h-[70vh]"></div>
+            </div>
         </div>
         <Footer/>
     </>
