@@ -1,16 +1,45 @@
 import { useNavigate } from "react-router";
 import { Footer } from "../Layers/Footer"
 import { Header } from "../Layers/Header"
+import { useForm } from "react-hook-form"
+import { useState } from "react";
 
+type Inputs = {
+  money: string
+  rate: string
+  time: string
+}
 
 export const Simple = () => {
 
     const navigate = useNavigate();
 
-    
+    const {
+      register,
+      handleSubmit, // handleSubmit'i buraya ekliyoruz
+      reset,
+      formState: { errors },
+    } = useForm<Inputs>();
+
+    const [result, setResult] = useState<number | null>();
 
     function onClick(url: string): void {
       navigate(url);
+    }
+
+    // Formun submit fonksiyonu
+    const hesapla = (data: Inputs) => {
+      const money = parseFloat(data.money);
+      const rate = parseFloat(data.rate) / 100;
+      const time = parseFloat(data.time);
+
+      const interest = money * rate * time;
+      setResult(interest);
+    }
+
+    const sifirla = () => {
+      reset();
+      setResult(null); // Sonucu sıfırlıyoruz
     }
 
   return (
@@ -18,8 +47,29 @@ export const Simple = () => {
         <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
-                <div className="simple-content">
+                <div className="simple-content flex flex-col items-center justify-center py-7">
+                <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
+                  <label htmlFor="mainMoney">Ana Para</label>
+                  <input className="simple-input" type="number" id="mainMoney" {...register("money", {required: "Bu alan gereklidir."})} />
+                  {errors.money && <span>{errors.money.message}</span>}
 
+                  <label htmlFor="rate">Faiz Oranı</label>
+                  <input className="simple-input" type="number" id="rate" {...register("rate", { required: "Bu alan gereklidir" })} />
+                  {errors.rate && <span>{errors.rate.message}</span>}
+
+                  <label htmlFor="time">Faiz Süresi</label>
+                  <input className="simple-input" type="number" id="time" {...register("time", {required: "Bu alan gereklidir"})}></input>
+                  {errors.time && <span>{errors.time.message}</span>}
+
+                  <div className="flex gap-14">
+                    <button type="submit">HESAPLA</button> {/* Bu buton formun submit butonu */}
+                    <button type="button" onClick={sifirla}>SIFIRLA</button> {/* Bu buton sıfırlama işlemi yapar */}
+                  </div>
+                </form>
+                <div className="py-5 flex flex-col gap-3">
+                  <h3>Hesaplanan Faiz Miktarı:</h3>
+                  <p className="bg-white text-black flex justify-center">{result}</p>
+                </div>
                 </div>
                 <div className="simple-content p-10 flex flex-col justify-center">
                   <h2 className="text-2xl">Basit Faiz Nedir?</h2>
