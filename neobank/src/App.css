@@ -6,3 +6,11 @@
   align-items: center;
   font-family: "Roboto", serif;
 }
+
+.simple-content {
+  @apply bg-lime-600 w-full lg:h-[70vh] rounded-xl text-white;
+}
+
+.simple-input {
+  @apply text-black text-center;
+}
