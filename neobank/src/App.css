@@ -14,3 +14,7 @@
 .simple-input {
   @apply text-black text-center;
 }
+
+.compound-content {
+  @apply bg-orange-500 w-full lg:h-[70vh] rounded-xl text-white;
+}

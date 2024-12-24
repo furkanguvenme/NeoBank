@@ -30,7 +30,7 @@ export const Simple = () => {
     // Formun submit fonksiyonu
     const hesapla = (data: Inputs) => {
       const money = parseFloat(data.money);
-      const rate = parseFloat(data.rate) / 100;
+      const rate = parseFloat(data.rate);
       const time = parseFloat(data.time);
 
       const interest = money * rate * time;
@@ -50,20 +50,20 @@ export const Simple = () => {
                 <div className="simple-content flex flex-col items-center justify-center py-7">
                 <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                   <label htmlFor="mainMoney">Ana Para</label>
-                  <input className="simple-input" type="number" id="mainMoney" {...register("money", {required: "Bu alan gereklidir."})} />
+                  <input className="simple-input" type="number" id="mainMoney" {...register("money", {required: "Bu alan gereklidir!"})} />
                   {errors.money && <span>{errors.money.message}</span>}
 
                   <label htmlFor="rate">Faiz Oranı</label>
-                  <input className="simple-input" type="number" id="rate" {...register("rate", { required: "Bu alan gereklidir" })} />
+                  <input className="simple-input" type="number" id="rate" step="0.01" {...register("rate", { required: "Bu alan gereklidir!" })} />
                   {errors.rate && <span>{errors.rate.message}</span>}
 
                   <label htmlFor="time">Faiz Süresi</label>
-                  <input className="simple-input" type="number" id="time" {...register("time", {required: "Bu alan gereklidir"})}></input>
+                  <input className="simple-input" type="number" id="time" {...register("time", {required: "Bu alan gereklidir!"})}></input>
                   {errors.time && <span>{errors.time.message}</span>}
 
                   <div className="flex gap-14">
-                    <button type="submit">HESAPLA</button> {/* Bu buton formun submit butonu */}
-                    <button type="button" onClick={sifirla}>SIFIRLA</button> {/* Bu buton sıfırlama işlemi yapar */}
+                    <button type="submit">Hesapla</button>
+                    <button type="button" onClick={sifirla}>Sıfırla</button>
                   </div>
                 </form>
                 <div className="py-5 flex flex-col gap-3">
