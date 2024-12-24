@@ -18,3 +18,11 @@
 .compound-content {
   @apply bg-orange-500 w-full lg:h-[70vh] rounded-xl text-white;
 }
+
+.compound-input {
+  @apply text-black text-center;
+}
+
+/* Compound Raio Button */
+
+/* Compound Raio Button */

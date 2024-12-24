@@ -30,17 +30,24 @@ export const Compound = () => {
         formState: { errors },
     } = useForm<Inputs>();
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setType(event.target.value);
-      };
+    };
 
     const hesapla = (data:Inputs) => {
+        const money = parseFloat(data.money);
+        const rate = parseFloat(data.rate);
+        const time = parseFloat(data.time);
+
+        if(type == "year"){ setResult(money*Math.pow((1 + rate), time)) }
+        else if (type == "month"){ setResult(money*Math.pow((1+(rate/12)),time)) }
 
     }
 
     const sifirla = () => {
         reset();
         setResult(null);
+        setType(null);
     }
 
   return (
@@ -50,10 +57,9 @@ export const Compound = () => {
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
                 <div className="compound-content flex flex-col items-center justify-center py-7">
                     <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
+                    <p>Lütfen zaman türü seçiniz!</p>
                         <div>
-                            <p>Lütfen zaman türü seçiniz!</p>
-                            
-                            <label htmlFor="year">Yıl</label>
+                            <label htmlFor="year">
                             <input
                                 type="radio"
                                 id="year"
@@ -61,8 +67,11 @@ export const Compound = () => {
                                 value="year"
                                 checked={type === "year"}
                                 onChange={handleChange}
+
                             />
-                            <label htmlFor="month">Ay</label>
+                            <span>Yıl</span>
+                            </label>
+                            <label htmlFor="month">
                             <input
                                 type="radio"
                                 id="month"
@@ -71,18 +80,20 @@ export const Compound = () => {
                                 checked={type === "month"}
                                 onChange={handleChange}
                             />
-                            <p>Seçilen zaman türü:<br/> {type == null ? "( Henüz seçim yapılmadı )" : type == "year" ? "( Yıl )" : "( Ay )"}</p>
+                            <span>Ay</span>
+                            </label>
                         </div>
+                        <p>Seçilen zaman türü:<br/> {type == null ? "( Henüz seçim yapılmadı )" : type == "year" ? "( Yıl )" : "( Ay )"}</p>
                         <label htmlFor="money"></label>
-                        <input id="money" type="number" className="" {...register("money", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="money" type="number" className="compound-input" {...register("money", {required:"Bu alan gereklidir!"})}></input>
                         {errors.money && <span>{errors.money.message}</span>}
 
                         <label htmlFor="rate"></label>
-                        <input id="rate" type="number" className="" step="0.01"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="rate" type="number" className="compound-input" step="0.01"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
                         {errors.rate && <span>{errors.rate.message}</span>}
 
                         <label htmlFor="time"></label>
-                        <input id="time" type="number" className="" {...register("time", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="time" type="number" className="compound-input" {...register("time", {required:"Bu alan gereklidir!"})}></input>
                         {errors.time && <span>{errors.time.message}</span>}
 
                         <div>
@@ -90,6 +101,10 @@ export const Compound = () => {
                             <button type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
+                    <div>
+                        <p>hesaplanan Faiz Miktarı:</p>
+                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : result}</p>
+                    </div>
                 </div>
                 <div className="compound-content p-10 flex flex-col justify-center">
                     <h2 className="text-2xl">Bileşik Faiz Nedir?</h2>
@@ -100,7 +115,7 @@ export const Compound = () => {
                     </p>
                     <br/>
                     
-                    <h3 className="text-xl">Hesaplama Formülü:</h3>
+                    <h3 className="text-xl">Hesaplama Formülü:</h3><br/>
                     <div className="flex justify-center items-center">
                         <p className="pl-3">
                             <strong>A = P × (1 + r)<sup>n</sup></strong>
