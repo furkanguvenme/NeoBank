@@ -31,6 +31,10 @@
   @apply text-black text-center;
 }
 
+.decreasing {
+  @apply w-full lg:h-[60vh] grid items-center justify-center grid-cols-3 lg:grid-rows-12 lg:grid-flow-col lg:gap-x-5 gap-y-2 lg:gap-y-0;
+}
+
 /* Compound Raio Button */
 
 /* Compound Raio Button */

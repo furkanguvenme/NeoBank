@@ -89,7 +89,7 @@ export const Compound = () => {
                         {errors.money && <span>{errors.money.message}</span>}
 
                         <label htmlFor="rate"></label>
-                        <input id="rate" type="number" className="compound-input" step="0.01"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="rate" type="number" className="compound-input" step="0.0001"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
                         {errors.rate && <span>{errors.rate.message}</span>}
 
                         <label htmlFor="time"></label>

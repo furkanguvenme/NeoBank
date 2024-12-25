@@ -54,7 +54,7 @@ export const Simple = () => {
                   {errors.money && <span>{errors.money.message}</span>}
 
                   <label htmlFor="rate">Faiz Oranı</label>
-                  <input className="simple-input" type="number" id="rate" step="0.01" {...register("rate", { required: "Bu alan gereklidir!" })} />
+                  <input className="simple-input" type="number" id="rate" step="0.0001" {...register("rate", { required: "Bu alan gereklidir!" })} />
                   {errors.rate && <span>{errors.rate.message}</span>}
 
                   <label htmlFor="time">Faiz Süresi</label>
