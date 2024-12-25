@@ -8,7 +8,7 @@
 }
 
 .simple-content {
-  @apply bg-lime-600 w-full lg:h-[70vh] rounded-xl text-white;
+  @apply bg-lime-600 w-full rounded-xl text-white;
 }
 
 .simple-input {
@@ -16,11 +16,23 @@
 }
 
 .compound-content {
-  @apply bg-orange-500 w-full lg:h-[70vh] rounded-xl text-white;
+  @apply bg-orange-500 w-full rounded-xl text-white;
 }
 
 .compound-input {
   @apply text-black text-center;
+}
+
+.credit-content {
+  @apply bg-red-600 w-full rounded-xl text-white;
+}
+
+.credit-input {
+  @apply text-black text-center;
+}
+
+.decreasing {
+  @apply w-full lg:h-[60vh] grid items-center justify-center grid-cols-3 lg:grid-rows-12 lg:grid-flow-col lg:gap-x-5 gap-y-2 lg:gap-y-0;
 }
 
 /* Compound Raio Button */

@@ -89,7 +89,7 @@ export const Compound = () => {
                         {errors.money && <span>{errors.money.message}</span>}
 
                         <label htmlFor="rate"></label>
-                        <input id="rate" type="number" className="compound-input" step="0.01"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="rate" type="number" className="compound-input" step="0.0001"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
                         {errors.rate && <span>{errors.rate.message}</span>}
 
                         <label htmlFor="time"></label>
@@ -118,7 +118,12 @@ export const Compound = () => {
                     <h3 className="text-xl">Hesaplama Formülü:</h3><br/>
                     <div className="flex justify-center items-center">
                         <p className="pl-3">
+                            <span>Yıl için:</span><br/>
                             <strong>A = P × (1 + r)<sup>n</sup></strong>
+                        </p>
+                        <p className="pl-10">
+                            <span>Ay için:</span><br/>
+                            <strong>A = P × (1 + r/12)<sup>n</sup></strong>
                         </p>
                     </div>
                     <br/>
@@ -126,7 +131,7 @@ export const Compound = () => {
                         <li><strong>A:</strong> Gelecekteki toplam değer (ana para + faiz)</li>
                         <li><strong>P:</strong> Başlangıçtaki ana para</li>
                         <li><strong>r:</strong> Faiz oranı (dönemlik, ondalık olarak yazılır, örn. %5 için 0.05)</li>
-                        <li><strong>n:</strong> Faiz uygulanacak dönem sayısı</li>
+                        <li><strong>n:</strong> Faiz uygulanacak dönem sayısı (Yıl veya ay olarak)</li>
                     </ul>
                     <br/>
                     

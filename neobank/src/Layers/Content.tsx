@@ -13,7 +13,7 @@ interface ContentProps {
         <button className="content bg-bilesik" onClick={() => onClick("/compound")}>
           <p className="btn">Bileşik Faiz Hesaplama</p>
         </button>
-        <button className="content bg-kredi" onClick={() => onClick("/interest")}>
+        <button className="content bg-kredi" onClick={() => onClick("/credit")}>
           <p className="btn">Kredi Hesaplama</p>
         </button>
         <button className="content bg-hisse" onClick={() => onClick("/share")}>
