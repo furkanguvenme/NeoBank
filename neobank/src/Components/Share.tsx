@@ -61,7 +61,7 @@ export const Share = () => {
             <Header onClick={onClick}/>
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
                 <div className="share-content">
-                    <form className={type == null ? "" : "hidden"}>
+                    <form className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
                         <label htmlFor="alsat">
                             <input id="alsat" type="radio" name="type" value="alsat" checked={type === "alsat"} onChange={handleChange}/>
                             <span>Alım - Satım Simülasyonu</span>
@@ -71,9 +71,9 @@ export const Share = () => {
                             <span>Uzun Vadeli Yatırım</span>
                         </label>
                     </form>
-                    <form onSubmit={handleSubmit(hesapla)}>
+                    <form className="flex flex-col gap-4 w-full h-full items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                         <div>
-                            <div className={type == null ? "hidden" : type == "alsat" ? "block" : "hidden"}>
+                            <div className={type == null ? "hidden" : type == "alsat" ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
                                 <label htmlFor="maliyet">
                                     <input id="maliyet" type="radio" name="step" value="maliyet" checked={step === "maliyet"} onChange={changeHandler}/>
                                     <span>Alım Maliyeti Hesaplama</span>
@@ -144,8 +144,53 @@ export const Share = () => {
                                 </label>
                             </div>
                         </div>
-                        <div>
-                        
+                        <div className={type == "uzun" ? "block" : "hidden"}>
+                            <div className="flex flex-col gap-4 w-full h-full items-center justify-center">
+                                <label htmlFor="year">
+                                    <input id="year" type="radio" name="step" value="year" checked={step === "year"} onChange={changeHandler}/>
+                                    <span>Yıl</span>
+                                </label>
+                                <label htmlFor="month">
+                                    <input id="month" type="radio" name="step" value="month" checked={step === "month"} onChange={changeHandler}/>
+                                    <span>Ay</span>
+                                </label>
+                            </div>
+                            <div className={step == "year" ? "block" : "hidden"}>
+                                <label htmlFor="money">
+                                    <span></span>
+                                    <input id="money" type="number" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                                <label htmlFor="rate">
+                                    <span></span>
+                                    <input id="rate" type="number" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                                <label htmlFor="time">
+                                    <span></span>
+                                    <input id="time" type="number" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                            </div>
+                            <div className={step == "month" ? "block" : "hidden"}>
+                            <label htmlFor="money">
+                                    <span></span>
+                                    <input id="money" type="number" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                                <label htmlFor="rate">
+                                    <span></span>
+                                    <input id="rate" type="number" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                                <label htmlFor="period">
+                                    <span></span>
+                                    <input id="period" type="number" {...register("period",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                                <label htmlFor="time">
+                                    <span></span>
+                                    <input id="time" type="number" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                </label>
+                            </div>
+                        </div>
+                        <div className={type != null && step != null ? "block" : "hidden"}>
+                            <button type="submit">Hesapla</button>
+                            <button type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
                 </div>
