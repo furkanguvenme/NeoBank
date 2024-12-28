@@ -29,6 +29,8 @@ export const Share = () => {
 
     const [step, setStep] = useState<string | null>();
 
+    const [result, setResult] = useState<number | null>();
+
     const {
         register,
         handleSubmit,
@@ -45,23 +47,43 @@ export const Share = () => {
         reset();
     }
 
-    const hesapla = (data:Inputs):void => {
-
+    const hesapla = (data: Inputs):void => {
+        switch(step){
+            case "maliyet": {
+                const adet = (data.piece || 0);
+                const fiyat = (data.price || 0);
+                const islem = (data.process || 0);
+                const deger = adet*fiyat + islem;
+                setResult(deger);
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     const sifirla = ():void => {
         reset();
+        setResult(null);
     }
 
-    console.log(type);
+    const geri = ():void => {
+        reset();
+        setType(null);
+        setStep(null);
+        setResult(null);
+    }
+
+    console.log(result);
 
   return (
     <>
         <div className="w-full flex flex-col items-center">
             <Header onClick={onClick}/>
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
-                <div className="share-content">
-                    <form className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
+            <div className="share-content h-full justify-center py-7">
+                    <div className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
+                        <p>Yapmak İstediğiniz İşlemi Seçiniz:</p>
                         <label htmlFor="alsat">
                             <input id="alsat" type="radio" name="type" value="alsat" checked={type === "alsat"} onChange={handleChange}/>
                             <span>Alım - Satım Simülasyonu</span>
@@ -70,82 +92,74 @@ export const Share = () => {
                             <input id="uzun" type="radio" name="type" value="uzun" checked={type === "uzun"} onChange={handleChange}/>
                             <span>Uzun Vadeli Yatırım</span>
                         </label>
-                    </form>
-                    <form className="flex flex-col gap-4 w-full h-full items-center justify-center" onSubmit={handleSubmit(hesapla)}>
-                        <div>
-                            <div className={type == null ? "hidden" : type == "alsat" ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
-                                <label htmlFor="maliyet">
+                    </div>
+                    <form className="flex flex-col gap-5 w-full h-full items-center justify-center" onSubmit={handleSubmit(hesapla)}>
+                        <div className={type == "alsat" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
+                            <div className="flex flex-col items-center gap-y-2">
+                            <p>Hesaplama türü seçiniz:</p>
+                                <label htmlFor="maliyet" className="">
                                     <input id="maliyet" type="radio" name="step" value="maliyet" checked={step === "maliyet"} onChange={changeHandler}/>
-                                    <span>Alım Maliyeti Hesaplama</span>
+                                    <span>Alım Maliyeti Hesabı</span>
                                 </label>
                                 <label htmlFor="deger">
                                     <input id="deger" type="radio" name="step" value="deger" checked={step === "deger"} onChange={changeHandler}/>
-                                    <span>Portföy Değeri Hesaplama</span>
+                                    <span>Portföy Değeri Hesabı</span>
                                 </label>
                                 <label htmlFor="kar">
                                     <input id="kar" type="radio" name="step" value="kar" checked={step === "kar"} onChange={changeHandler}/>
-                                    <span>Kar/Zarar Hesaplaması</span>
+                                    <span>Kar/Zarar Hesabı</span>
                                 </label>
                             </div>
-                            <div className={step == null ? "hidden" : step == "maliyet" ? "block" : "hidden"}>
+                            <div className={step == "maliyet" ? "flex flex-col gap-y-3" : "hidden"}>
                                 <label htmlFor="piece">
-                                    <span></span>
-                                    <input id="piece" type="number" {...register("piece", {required:"Bu alan gereklidir!"})}/>
+                                    <input id="piece" className="share-input" type="number" placeholder="Alınan hisse miktarı" {...register("piece", {required:"Bu alan gereklidir!"})}/>
                                     {errors.piece && <span>{errors.piece.message}</span>}
                                 </label>
                                 <label htmlFor="price">
-                                    <span></span>
-                                    <input id="" type="number" {...register("price",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="price" className="share-input" type="number" placeholder="Hisse fiyatı" {...register("price",{required:"Bu alan gereklidir!"})}/>
                                     {errors.price && <span>{errors.price.message}</span>}
                                 </label>
                                 <label htmlFor="process">
-                                    <span></span>
-                                    <input id="process" type="number" {...register("process",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="process" className="share-input" type="number" placeholder="İşlem ücreti (varsa)" {...register("process",{required:"Bu alan gereklidir!"})}/>
                                     {errors.process && <span>{errors.process.message}</span>}
                                 </label>
                             </div>
-                            <div className={step == null ? "hidden" : step == "deger" ? "block" : "hidden"}>
+                            <div className={step == "deger" ? "flex flex-col gap-y-3" : "hidden"}>
                                 <label htmlFor="piece">
-                                    <span></span>
-                                    <input id="piece" type="number" {...register("piece", {required:"Bu alan gereklidir!"})}/>
+                                    <input id="piece" className="share-input" type="number" placeholder="Mevcut hisse miktarı" {...register("piece", {required:"Bu alan gereklidir!"})}/>
                                     {errors.piece && <span>{errors.piece.message}</span>}
                                 </label>
                                 <label htmlFor="price">
-                                    <span></span>
-                                    <input id="price" type="number" {...register("price",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="price" className="share-input" type="number" placeholder="Güncel hisse fiyatı" {...register("price",{required:"Bu alan gereklidir!"})}/>
                                     {errors.price && <span>{errors.price.message}</span>}
                                 </label>
                                 <label htmlFor="own">
-                                    <span></span>
-                                    <input id="own" type="number" {...register("own",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="own" className="share-input" type="number" placeholder="Nakit" {...register("own",{required:"Bu alan gereklidir!"})}/>
                                     {errors.own && <span>{errors.own.message}</span>}
                                 </label>
                             </div>
-                            <div className={step == null ? "hidden" : step == "kar" ? "block" : "hidden"}>
+                            <div className={step == "kar" ? "flex flex-col gap-y-3" : "hidden"}>
                                 <label htmlFor="sales">
-                                    <span></span>
-                                    <input id="sales" type="number" {...register("sales", {required:"Bu alan gereklidir!"})}/>
+                                    <input id="sales" className="share-input" type="number" placeholder="Satış fiyatı" {...register("sales", {required:"Bu alan gereklidir!"})}/>
                                     {errors.sales && <span>{errors.sales.message}</span>}
                                 </label>
                                 <label htmlFor="buying">
-                                    <span></span>
-                                    <input id="buying" type="number" {...register("buying",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="buying" className="share-input" type="number" placeholder="Alış fiyatı" {...register("buying",{required:"Bu alan gereklidir!"})}/>
                                     {errors.buying && <span>{errors.buying.message}</span>}
                                 </label>
                                 <label htmlFor="piece">
-                                    <span></span>
-                                    <input id="piece" type="number" {...register("piece",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="piece" className="share-input" type="number" placeholder="Satılan hisse miktarı" {...register("piece",{required:"Bu alan gereklidir!"})}/>
                                     {errors.piece && <span>{errors.piece.message}</span>}
                                 </label>
                                 <label htmlFor="process">
-                                    <span></span>
-                                    <input id="process" type="number" {...register("process",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="process" className="share-input" type="number" placeholder="İşlem ücretleri (Varsa)" {...register("process",{required:"Bu alan gereklidir!"})}/>
                                     {errors.process && <span>{errors.process.message}</span>}
                                 </label>
                             </div>
                         </div>
-                        <div className={type == "uzun" ? "block" : "hidden"}>
-                            <div className="flex flex-col gap-4 w-full h-full items-center justify-center">
+                        <div className={type == "uzun" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
+                            <div className="flex flex-col items-center gap-y-2">
+                            <p>Vade türü seçiniz:</p>
                                 <label htmlFor="year">
                                     <input id="year" type="radio" name="step" value="year" checked={step === "year"} onChange={changeHandler}/>
                                     <span>Yıl</span>
@@ -155,44 +169,39 @@ export const Share = () => {
                                     <span>Ay</span>
                                 </label>
                             </div>
-                            <div className={step == "year" ? "block" : "hidden"}>
+                            <div className={step == "year" ? "flex flex-col gap-y-3" : "hidden"}>
                                 <label htmlFor="money">
-                                    <span></span>
-                                    <input id="money" type="number" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                                 <label htmlFor="rate">
-                                    <span></span>
-                                    <input id="rate" type="number" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="rate" className="share-input" type="number" placeholder="Getiri Oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                                 <label htmlFor="time">
-                                    <span></span>
-                                    <input id="time" type="number" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (Yıl)" {...register("time",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                             </div>
-                            <div className={step == "month" ? "block" : "hidden"}>
+                            <div className={step == "month" ? "flex flex-col gap-y-3    " : "hidden"}>
                             <label htmlFor="money">
-                                    <span></span>
-                                    <input id="money" type="number" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                                 <label htmlFor="rate">
-                                    <span></span>
-                                    <input id="rate" type="number" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="rate" className="share-input" type="number" placeholder="Getiri oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                                 <label htmlFor="period">
-                                    <span></span>
-                                    <input id="period" type="number" {...register("period",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="period" className="share-input" type="number" placeholder="Dönem sayısı (d)" {...register("period",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                                 <label htmlFor="time">
-                                    <span></span>
-                                    <input id="time" type="number" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                    <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (t)" {...register("time",{required:"Bu alan gereklidir!"})}/>
                                 </label>
                             </div>
                         </div>
-                        <div className={type != null && step != null ? "block" : "hidden"}>
-                            <button type="submit">Hesapla</button>
-                            <button type="button" onClick={sifirla}>Sıfırla</button>
+                        <div className={type != null && step != null ? "flex flex-col gap-y-3 sm:gap-y-0 sm:flex-row w-3/5 sm:justify-between" : "hidden"}>
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                            <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={geri}>Geri</button>
+                            <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
+                    <p className={result == null ? "hidden" : "block"}>{result}</p>
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>
@@ -202,7 +211,7 @@ export const Share = () => {
                     <br/>
                     <ul className="pl-3">
                         <li><strong>Alım Maliyeti:</strong> Alınan Hisse Miktarı × Hisse Fiyatı + İşlem Ücreti (Varsa)</li>
-                        <li><strong>Portföy Değeri:</strong> (Sahip Olunan Hisse Miktarı × Guncel Hisse Fiyatı) + Nakit</li>
+                        <li><strong>Portföy Değeri:</strong> (Mevcut Hisse Miktarı × Guncel Hisse Fiyatı) + Nakit</li>
                         <li><strong>Kar/Zarar:</strong> (Satış Fiyatı - Alış Fiyatı) x Satılan Hisse Miktarı - İşlem Ücretleri</li>
                     </ul><br/>
                     <p className="pl-3">Bu mod, hisse alım-satımıyla ilgilenen kullanıcılar için idealdir ve piyasa dinamiklerini daha iyi anlamalarını sağlar.</p><br/>
