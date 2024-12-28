@@ -29,6 +29,8 @@ export const Share = () => {
 
     const [step, setStep] = useState<string | null>();
 
+    const [result, setResult] = useState<number | null>();
+
     const {
         register,
         handleSubmit,
@@ -45,15 +47,34 @@ export const Share = () => {
         reset();
     }
 
-    const hesapla = (data:Inputs):void => {
-        
+    const hesapla = (data: Inputs):void => {
+        switch(step){
+            case "maliyet": {
+                const adet = (data.piece || 0);
+                const fiyat = (data.price || 0);
+                const islem = (data.process || 0);
+                const deger = adet*fiyat + islem;
+                setResult(deger);
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     const sifirla = ():void => {
         reset();
+        setResult(null);
     }
 
-    console.log(type);
+    const geri = ():void => {
+        reset();
+        setType(null);
+        setStep(null);
+        setResult(null);
+    }
+
+    console.log(result);
 
   return (
     <>
@@ -61,7 +82,7 @@ export const Share = () => {
             <Header onClick={onClick}/>
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
             <div className="share-content h-full justify-center py-7">
-                    <form className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
+                    <div className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
                         <p>Yapmak İstediğiniz İşlemi Seçiniz:</p>
                         <label htmlFor="alsat">
                             <input id="alsat" type="radio" name="type" value="alsat" checked={type === "alsat"} onChange={handleChange}/>
@@ -71,22 +92,22 @@ export const Share = () => {
                             <input id="uzun" type="radio" name="type" value="uzun" checked={type === "uzun"} onChange={handleChange}/>
                             <span>Uzun Vadeli Yatırım</span>
                         </label>
-                    </form>
+                    </div>
                     <form className="flex flex-col gap-5 w-full h-full items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                         <div className={type == "alsat" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
                             <div className="flex flex-col items-center gap-y-2">
                             <p>Hesaplama türü seçiniz:</p>
                                 <label htmlFor="maliyet" className="">
                                     <input id="maliyet" type="radio" name="step" value="maliyet" checked={step === "maliyet"} onChange={changeHandler}/>
-                                    <span>Alım Maliyeti Hesaplama</span>
+                                    <span>Alım Maliyeti Hesabı</span>
                                 </label>
                                 <label htmlFor="deger">
                                     <input id="deger" type="radio" name="step" value="deger" checked={step === "deger"} onChange={changeHandler}/>
-                                    <span>Portföy Değeri Hesaplama</span>
+                                    <span>Portföy Değeri Hesabı</span>
                                 </label>
                                 <label htmlFor="kar">
                                     <input id="kar" type="radio" name="step" value="kar" checked={step === "kar"} onChange={changeHandler}/>
-                                    <span>Kar/Zarar Hesaplaması</span>
+                                    <span>Kar/Zarar Hesabı</span>
                                 </label>
                             </div>
                             <div className={step == "maliyet" ? "flex flex-col gap-y-3" : "hidden"}>
@@ -174,11 +195,13 @@ export const Share = () => {
                                 </label>
                             </div>
                         </div>
-                        <div className={type != null && step != null ? "flex w-3/5 justify-between" : "hidden"}>
+                        <div className={type != null && step != null ? "flex flex-col gap-y-3 sm:gap-y-0 sm:flex-row w-3/5 sm:justify-between" : "hidden"}>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                            <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={geri}>Geri</button>
                             <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
+                    <p className={result == null ? "hidden" : "block"}>{result}</p>
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>
