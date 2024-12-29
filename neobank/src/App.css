@@ -12,7 +12,7 @@
 }
 
 .simple-input {
-  @apply text-black text-center;
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black;
 }
 
 .compound-content {
@@ -20,7 +20,7 @@
 }
 
 .compound-input {
-  @apply text-black text-center;
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black;
 }
 
 .credit-content {
@@ -28,7 +28,7 @@
 }
 
 .credit-input {
-  @apply text-black text-center;
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black;
 }
 
 .decreasing {
@@ -40,7 +40,7 @@
 }
 
 .share-input {
-  @apply text-black text-center;
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black;
 }
 
 /* Compound Raio Button */

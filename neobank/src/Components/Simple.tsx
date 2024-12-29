@@ -49,21 +49,21 @@ export const Simple = () => {
             <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
                 <div className="simple-content flex flex-col items-center justify-center py-7">
                 <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
-                  <label htmlFor="mainMoney">Ana Para</label>
+                  <label className="w-full" htmlFor="mainMoney">Ana Para:</label>
                   <input className="simple-input" type="number" id="mainMoney" {...register("money", {required: "Bu alan gereklidir!"})} />
                   {errors.money && <span>{errors.money.message}</span>}
 
-                  <label htmlFor="rate">Faiz Oranı</label>
+                  <label className="w-full" htmlFor="rate">Faiz Oranı:</label>
                   <input className="simple-input" type="number" id="rate" step="0.0001" {...register("rate", { required: "Bu alan gereklidir!" })} />
                   {errors.rate && <span>{errors.rate.message}</span>}
 
-                  <label htmlFor="time">Faiz Süresi</label>
+                  <label className="w-full" htmlFor="time">Faiz Süresi:</label>
                   <input className="simple-input" type="number" id="time" {...register("time", {required: "Bu alan gereklidir!"})}></input>
                   {errors.time && <span>{errors.time.message}</span>}
 
-                  <div className="flex gap-14">
-                    <button type="submit">Hesapla</button>
-                    <button type="button" onClick={sifirla}>Sıfırla</button>
+                  <div className="flex w-full justify-between">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                    <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                   </div>
                 </form>
                 <div className="py-5 flex flex-col gap-3">
