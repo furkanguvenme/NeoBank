@@ -25,6 +25,7 @@ export const Share = () => {
         navigate(url)
     }
 
+    
     const [type, setType] = useState<string | null>(null);
 
     const [step, setStep] = useState<string | null>(null);
