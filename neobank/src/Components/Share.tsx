@@ -82,6 +82,7 @@ export const Share = () => {
         }
     }
 
+
     const sifirla = ():void => {
         reset();
         setResult(null);
