@@ -14,7 +14,7 @@ function App() {
       <Route path="/compound" element={<Compound />} />
       <Route path="/credit" element={<Credit />} />
       <Route path="/share" element={<Share />} />
-    </Routes>
+    </Routes> 
   );
 }
 
