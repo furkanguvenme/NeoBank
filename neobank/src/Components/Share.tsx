@@ -48,13 +48,30 @@ export const Share = () => {
     }
 
     const hesapla = (data: Inputs):void => {
-        switch(step){
+        switch(step) {
             case "maliyet": {
-                const adet = (data.piece || 0);
-                const fiyat = (data.price || 0);
-                const islem = (data.process || 0);
-                const deger = adet*fiyat + islem;
-                setResult(deger);
+                const sonuc = data.piece*data.price + data.process;
+                setResult(sonuc);
+                break;
+            }
+            case "deger": {
+                const sonuc = data.piece*data.price + data.own;
+                setResult(sonuc);
+                break;
+            }
+            case "kar": {
+                const sonuc = (data.sales - data.buying)*data.piece - data.process;
+                setResult(sonuc);
+                break;
+            }
+            case "year": {
+                const sonuc = data.money*Math.pow((1 + data.rate), data.time);
+                setResult(sonuc);
+                break;
+            }
+            case "month": {
+                const sonuc = data.money*Math.pow((1 + (data.rate / data.period)), (data.period*(data.time/12)));
+                setResult(sonuc);
                 break;
             }
             default:
