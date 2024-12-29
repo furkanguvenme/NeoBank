@@ -8,7 +8,6 @@ type Inputs = {
     money:string,
     rate:string,
     time:string,
-    type:string,
 }
 
 export const Compound = () => {

@@ -25,11 +25,12 @@ export const Share = () => {
         navigate(url)
     }
 
-    const [type, setType] = useState<string | null>();
+    
+    const [type, setType] = useState<string | null>(null);
 
-    const [step, setStep] = useState<string | null>();
+    const [step, setStep] = useState<string | null>(null);
 
-    const [result, setResult] = useState<number | null>();
+    const [result, setResult] = useState<number | null>(null);
 
     const {
         register,
@@ -39,10 +40,12 @@ export const Share = () => {
     } = useForm<Inputs>();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+        event.preventDefault();
         setType(event.target.value);
     }
 
     const changeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
+        event.preventDefault();
         setStep(event.target.value);
         reset();
     }
@@ -79,6 +82,7 @@ export const Share = () => {
         }
     }
 
+
     const sifirla = ():void => {
         reset();
         setResult(null);
@@ -90,8 +94,6 @@ export const Share = () => {
         setStep(null);
         setResult(null);
     }
-
-    console.log(result);
 
   return (
     <>
@@ -189,26 +191,33 @@ export const Share = () => {
                             <div className={step == "year" ? "flex flex-col gap-y-3" : "hidden"}>
                                 <label htmlFor="money">
                                     <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.money && <span>{errors.money.message}</span>}
                                 </label>
                                 <label htmlFor="rate">
                                     <input id="rate" className="share-input" type="number" placeholder="Getiri Oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.rate && <span>{errors.rate.message}</span>}
                                 </label>
                                 <label htmlFor="time">
                                     <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (Yıl)" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.time && <span>{errors.time.message}</span>}
                                 </label>
                             </div>
                             <div className={step == "month" ? "flex flex-col gap-y-3    " : "hidden"}>
                             <label htmlFor="money">
                                     <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.money && <span>{errors.money.message}</span>}
                                 </label>
                                 <label htmlFor="rate">
                                     <input id="rate" className="share-input" type="number" placeholder="Getiri oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.rate && <span>{errors.rate.message}</span>}
                                 </label>
                                 <label htmlFor="period">
                                     <input id="period" className="share-input" type="number" placeholder="Dönem sayısı (d)" {...register("period",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.period && <span>{errors.period.message}</span>}
                                 </label>
                                 <label htmlFor="time">
                                     <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (t)" {...register("time",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.time && <span>{errors.time.message}</span>}
                                 </label>
                             </div>
                         </div>
@@ -235,7 +244,7 @@ export const Share = () => {
                     <h3 className="text-xl">2. Uzun Vadeli Yatırım Simülasyonu</h3>
                     <p className="pl-3">Bu mod, belirli bir başlangıç tutarı, yıllık getiri oranı ve yatırım süresi girilerek yatırımın zamanla nasıl büyüyeceğini hesaplar. Aşağıdaki formül bu modda kullanılmaktadır:</p>
                     <div className="w-full flex justify-center py-3">
-                        <p>Toplam Getiri = Ana Para x ( 1 + r )<sup>Yıl</sup></p>
+                        <p>Toplam Getiri = <br className="sm:hidden"/>Ana Para x ( 1 + r )<sup>Yıl</sup></p>
                     </div>
                     <h4 className="text-xl">Örnek:</h4>
                     <ul>
@@ -244,7 +253,7 @@ export const Share = () => {
                     </ul>
                     <hr className="border-[1px] mt-3"/>
                     <div className="w-full flex justify-center py-3">
-                        <p>Toplam Getiri = Ana Para x ( 1 + r / d )<sup>(t / 12)</sup></p>
+                        <p>Toplam Getiri = <br className="sm:hidden"/>Ana Para x ( 1 + r / d )<sup>(d * (t / 12))</sup></p>
                     </div>
                     <ul>
                         <li><strong>Getiri Oranı (r):</strong> Yıllık getiri oranı (%10 için 0.10).</li>
