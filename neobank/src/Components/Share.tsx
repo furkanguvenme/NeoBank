@@ -5,12 +5,19 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 type Inputs = {
-    piece:number;
-    price:number;
-    process:number;
+    mpiece:number;
+    mprice:number;
+    mprocess:number;
+    dpiece:number;
+    dprice:number;
     own:number;
+    kpiece:number;
+    kprocess:number;
     sales:number;
     buying:number;
+    ymoney:number;
+    yrate:number;
+    ytime:number;
     money:number;
     rate:number;
     period:number;
@@ -51,25 +58,30 @@ export const Share = () => {
     }
 
     const hesapla = (data: Inputs):void => {
+        console.log(data);
+        console.log(step);
+        console.log(type);
         switch(step) {
             case "maliyet": {
-                const sonuc = data.piece*data.price + data.process;
-                setResult(sonuc);
+                    const sonuc = data.mpiece*data.mprice + data.mprocess;
+                    setResult(sonuc);
                 break;
             }
             case "deger": {
-                const sonuc = data.piece*data.price + data.own;
+                const sonuc = data.dpiece*data.dprice + data.own;
                 setResult(sonuc);
                 break;
             }
             case "kar": {
-                const sonuc = (data.sales - data.buying)*data.piece - data.process;
+                const sonuc = (data.sales - data.buying)*data.kpiece - data.kprocess;
                 setResult(sonuc);
                 break;
             }
             case "year": {
-                const sonuc = data.money*Math.pow((1 + data.rate), data.time);
+
+                const sonuc = data.ymoney*Math.pow((1 + data.yrate), data.ytime);
                 setResult(sonuc);
+
                 break;
             }
             case "month": {
@@ -95,6 +107,28 @@ export const Share = () => {
         setResult(null);
     }
 
+    const kontrol = (data:Inputs):void => {
+        console.log(data.mpiece);
+        console.log(data.mprice);
+        console.log(data.mprocess);
+        console.log(data.dpiece);
+        console.log(data.dprice);
+        console.log(data.own);
+        console.log(data.kpiece);
+        console.log(data.kprocess);
+        console.log(data.sales);
+        console.log(data.buying);
+        console.log(data.ymoney);
+        console.log(data.yrate); 
+        console.log(data.ytime);
+        console.log(data.money);
+        console.log(data.rate);
+        console.log(data.period);
+        console.log(data.time);
+        console.log(step);
+        console.log(type);
+    }
+
   return (
     <>
         <div className="w-full flex flex-col items-center">
@@ -112,14 +146,14 @@ export const Share = () => {
                             <span>Uzun Vadeli Yatırım</span>
                         </label>
                     </div>
-                    <form className="flex flex-col gap-5 w-full h-full items-center justify-center" onSubmit={handleSubmit(hesapla)}>
+                    <form className={type == null ? "hidden" : "flex flex-col gap-5 w-full h-full items-center justify-center"} onSubmit={handleSubmit(hesapla)}>
                         <div className={type == "alsat" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
                             <div className="flex flex-col items-center gap-y-2">
                             <p>Hesaplama türü seçiniz:</p>
                                 <label htmlFor="maliyet" className="">
                                     <input id="maliyet" type="radio" name="step" value="maliyet" checked={step === "maliyet"} onChange={changeHandler}/>
                                     <span>Alım Maliyeti Hesabı</span>
-                                </label>
+                                </label>    
                                 <label htmlFor="deger">
                                     <input id="deger" type="radio" name="step" value="deger" checked={step === "deger"} onChange={changeHandler}/>
                                     <span>Portföy Değeri Hesabı</span>
@@ -130,27 +164,27 @@ export const Share = () => {
                                 </label>
                             </div>
                             <div className={step == "maliyet" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="piece">
-                                    <input id="piece" className="share-input" type="number" placeholder="Alınan hisse miktarı" {...register("piece", {required:"Bu alan gereklidir!"})}/>
-                                    {errors.piece && <span>{errors.piece.message}</span>}
+                                <label htmlFor="mpiece">
+                                    <input id="mpiece" className="share-input" type="number" placeholder="Alınan hisse miktarı" {...register("mpiece", {required:"Bu alan gereklidir!"})}/>
+                                    {errors.mpiece && <span>{errors.mpiece.message}</span>}
                                 </label>
-                                <label htmlFor="price">
-                                    <input id="price" className="share-input" type="number" placeholder="Hisse fiyatı" {...register("price",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.price && <span>{errors.price.message}</span>}
+                                <label htmlFor="mprice">
+                                    <input id="mprice" className="share-input" type="number" placeholder="Hisse fiyatı" {...register("mprice",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.mprice && <span>{errors.mprice.message}</span>}
                                 </label>
-                                <label htmlFor="process">
-                                    <input id="process" className="share-input" type="number" placeholder="İşlem ücreti (varsa)" {...register("process",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.process && <span>{errors.process.message}</span>}
+                                <label htmlFor="mprocess">
+                                    <input id="mprocess" className="share-input" type="number" placeholder="İşlem ücreti (varsa)" {...register("mprocess",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.mprocess && <span>{errors.mprocess.message}</span>}
                                 </label>
                             </div>
                             <div className={step == "deger" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="piece">
-                                    <input id="piece" className="share-input" type="number" placeholder="Mevcut hisse miktarı" {...register("piece", {required:"Bu alan gereklidir!"})}/>
-                                    {errors.piece && <span>{errors.piece.message}</span>}
+                                <label htmlFor="dpiece">
+                                    <input id="dpiece" className="share-input" type="number" placeholder="Mevcut hisse miktarı" {...register("dpiece", {required:"Bu alan gereklidir!"})}/>
+                                    {errors.dpiece && <span>{errors.dpiece.message}</span>}
                                 </label>
-                                <label htmlFor="price">
-                                    <input id="price" className="share-input" type="number" placeholder="Güncel hisse fiyatı" {...register("price",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.price && <span>{errors.price.message}</span>}
+                                <label htmlFor="dprice">
+                                    <input id="dprice" className="share-input" type="number" placeholder="Güncel hisse fiyatı" {...register("dprice",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.dprice && <span>{errors.dprice.message}</span>}
                                 </label>
                                 <label htmlFor="own">
                                     <input id="own" className="share-input" type="number" placeholder="Nakit" {...register("own",{required:"Bu alan gereklidir!"})}/>
@@ -166,13 +200,13 @@ export const Share = () => {
                                     <input id="buying" className="share-input" type="number" placeholder="Alış fiyatı" {...register("buying",{required:"Bu alan gereklidir!"})}/>
                                     {errors.buying && <span>{errors.buying.message}</span>}
                                 </label>
-                                <label htmlFor="piece">
-                                    <input id="piece" className="share-input" type="number" placeholder="Satılan hisse miktarı" {...register("piece",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.piece && <span>{errors.piece.message}</span>}
+                                <label htmlFor="kpiece">
+                                    <input id="kpiece" className="share-input" type="number" placeholder="Satılan hisse miktarı" {...register("kpiece",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.kpiece && <span>{errors.kpiece.message}</span>}
                                 </label>
-                                <label htmlFor="process">
-                                    <input id="process" className="share-input" type="number" placeholder="İşlem ücretleri (Varsa)" {...register("process",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.process && <span>{errors.process.message}</span>}
+                                <label htmlFor="kprocess">
+                                    <input id="kprocess" className="share-input" type="number" placeholder="İşlem ücretleri (Varsa)" {...register("kprocess",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.kprocess && <span>{errors.kprocess.message}</span>}
                                 </label>
                             </div>
                         </div>
@@ -189,17 +223,17 @@ export const Share = () => {
                                 </label>
                             </div>
                             <div className={step == "year" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="money">
-                                    <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.money && <span>{errors.money.message}</span>}
+                                <label htmlFor="ymoney">
+                                    <input id="ymoney" className="share-input" type="number" placeholder="Ana para" {...register("ymoney",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.ymoney && <span>{errors.ymoney.message}</span>}
                                 </label>
-                                <label htmlFor="rate">
-                                    <input id="rate" className="share-input" type="number" placeholder="Getiri Oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.rate && <span>{errors.rate.message}</span>}
+                                <label htmlFor="yrate">
+                                    <input id="yrate" className="share-input" type="number" placeholder="Getiri Oranı (r)" {...register("yrate",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.yrate && <span>{errors.yrate.message}</span>}
                                 </label>
-                                <label htmlFor="time">
-                                    <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (Yıl)" {...register("time",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.time && <span>{errors.time.message}</span>}
+                                <label htmlFor="ytime">
+                                    <input id="ytime" className="share-input" type="number" placeholder="Yatırım süresi (Yıl)" {...register("ytime",{required:"Bu alan gereklidir!"})}/>
+                                    {errors.ytime && <span>{errors.ytime.message}</span>}
                                 </label>
                             </div>
                             <div className={step == "month" ? "flex flex-col gap-y-3    " : "hidden"}>
@@ -221,13 +255,15 @@ export const Share = () => {
                                 </label>
                             </div>
                         </div>
+                        <p>{result == null ? "Henüz hesaplama yapılmadı" : `Sonuç: ${result}₺`}</p>
                         <div className={type != null && step != null ? "flex flex-col gap-y-3 sm:gap-y-0 sm:flex-row w-3/5 sm:justify-between" : "hidden"}>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
                             <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={geri}>Geri</button>
+                            <button className="bg-lime-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={kontrol}>Kontrol</button>
                             <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
-                    <p className={result == null ? "hidden" : "block"}>{result}</p>
+                    
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>
