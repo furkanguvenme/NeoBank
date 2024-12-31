@@ -1,269 +1,115 @@
 import { useNavigate } from "react-router";
-import { Footer } from "../Layers/Footer";
-import { Header } from "../Layers/Header";
+import { Footer } from "../Layers/Footer"
+import { Header } from "../Layers/Header"
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import shareData from "../share_data";
 
 type Inputs = {
-    mpiece:number;
-    mprice:number;
-    mprocess:number;
-    dpiece:number;
-    dprice:number;
-    own:number;
-    kpiece:number;
-    kprocess:number;
-    sales:number;
-    buying:number;
-    ymoney:number;
-    yrate:number;
-    ytime:number;
-    money:number;
-    rate:number;
-    period:number;
-    time:number;
+    alinanHisse:number;
+    hisseFiyati:number;
+    islemUcreti:number;
+    mevcutHisse:number;
+    güncelFiyat:number;
+    nakit:number;
+    satisFiyati:number;
+    alisFiyati:number;
+    satilanHisse:number;
+    islemTutari:number;
+    yilPara:number;
+    yilOran:number;
+    yil:number;
+    ayPara:number;
+    ayOran:number;
+    donemSayisi:number;
+    ay:number;
 }
 
 export const Share = () => {
 
     const navigate = useNavigate();
 
-    const onClick = (url:string):void => {
-        navigate(url)
+    const onClick = (url: string):void => {
+        navigate(url);
     }
 
-    
-    const [type, setType] = useState<string | null>(null);
-
-    const [step, setStep] = useState<string | null>(null);
-
-    const [result, setResult] = useState<number | null>(null);
+    const {yatirimTuru, inputs} = shareData;
 
     const {
         register,
         handleSubmit,
         reset,
-        formState: { errors },
+        formState:{ errors },
     } = useForm<Inputs>();
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
-        event.preventDefault();
-        setType(event.target.value);
+    const [selectedYatirimTuru, setSelectedYatirimTuru] = useState<string | null>(null);
+    const [selectedIslem, setSelectedIslem] = useState<string | null>(null);
+
+    const indexFind = (type: string | null): typeof yatirimTuru.tip[keyof typeof yatirimTuru.tip] | undefined => {
+        if(selectedYatirimTuru != null){
+        const key = Object.keys(yatirimTuru.tip).find((key) => key === type) as keyof typeof yatirimTuru.tip | undefined;
+        return key ? yatirimTuru.tip[key] : undefined;}
+    };
+
+    const yatirimData = indexFind(selectedYatirimTuru);
+
+    const yatirimTuruChange = (event: React.ChangeEvent<HTMLInputElement>):void =>{
+        setSelectedYatirimTuru(event.target.value);
     }
 
-    const changeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
-        event.preventDefault();
-        setStep(event.target.value);
-        reset();
+    const islemTuruChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
+        setSelectedIslem(event.target.value);
     }
-
-    const hesapla = (data: Inputs):void => {
-        console.log(data);
-        console.log(step);
-        console.log(type);
-        switch(step) {
-            case "maliyet": {
-                    const sonuc = data.mpiece*data.mprice + data.mprocess;
-                    setResult(sonuc);
-                break;
-            }
-            case "deger": {
-                const sonuc = data.dpiece*data.dprice + data.own;
-                setResult(sonuc);
-                break;
-            }
-            case "kar": {
-                const sonuc = (data.sales - data.buying)*data.kpiece - data.kprocess;
-                setResult(sonuc);
-                break;
-            }
-            case "year": {
-
-                const sonuc = data.ymoney*Math.pow((1 + data.yrate), data.ytime);
-                setResult(sonuc);
-
-                break;
-            }
-            case "month": {
-                const sonuc = data.money*Math.pow((1 + (data.rate / data.period)), (data.period*(data.time/12)));
-                setResult(sonuc);
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-
-    const sifirla = ():void => {
-        reset();
-        setResult(null);
-    }
-
-    const geri = ():void => {
-        reset();
-        setType(null);
-        setStep(null);
-        setResult(null);
-    }
-
-    const kontrol = (data:Inputs):void => {
-        console.log(data.mpiece);
-        console.log(data.mprice);
-        console.log(data.mprocess);
-        console.log(data.dpiece);
-        console.log(data.dprice);
-        console.log(data.own);
-        console.log(data.kpiece);
-        console.log(data.kprocess);
-        console.log(data.sales);
-        console.log(data.buying);
-        console.log(data.ymoney);
-        console.log(data.yrate); 
-        console.log(data.ytime);
-        console.log(data.money);
-        console.log(data.rate);
-        console.log(data.period);
-        console.log(data.time);
-        console.log(step);
-        console.log(type);
+    
+    const test = () =>{
+        console.log(selectedYatirimTuru);
+        console.log(selectedIslem);
     }
 
   return (
     <>
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
-            <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
-            <div className="share-content h-full justify-center py-7">
-                    <div className={type == null ? "flex flex-col gap-4 w-full h-full items-center justify-center" : "hidden"}>
-                        <p>Yapmak İstediğiniz İşlemi Seçiniz:</p>
-                        <label htmlFor="alsat">
-                            <input id="alsat" type="radio" name="type" value="alsat" checked={type === "alsat"} onChange={handleChange}/>
-                            <span>Alım - Satım Simülasyonu</span>
-                        </label>
-                        <label htmlFor="uzun">
-                            <input id="uzun" type="radio" name="type" value="uzun" checked={type === "uzun"} onChange={handleChange}/>
-                            <span>Uzun Vadeli Yatırım</span>
-                        </label>
-                    </div>
-                    <form className={type == null ? "hidden" : "flex flex-col gap-5 w-full h-full items-center justify-center"} onSubmit={handleSubmit(hesapla)}>
-                        <div className={type == "alsat" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
-                            <div className="flex flex-col items-center gap-y-2">
-                            <p>Hesaplama türü seçiniz:</p>
-                                <label htmlFor="maliyet" className="">
-                                    <input id="maliyet" type="radio" name="step" value="maliyet" checked={step === "maliyet"} onChange={changeHandler}/>
-                                    <span>Alım Maliyeti Hesabı</span>
-                                </label>    
-                                <label htmlFor="deger">
-                                    <input id="deger" type="radio" name="step" value="deger" checked={step === "deger"} onChange={changeHandler}/>
-                                    <span>Portföy Değeri Hesabı</span>
+            <div className="w-4/5 grid lg:grid-cols-2 grid-cols-1 grid-flow-row gap-6">
+                <div className="share-content">
+                    <form onSubmit={handleSubmit()}>
+                        <div>
+                            <p>Yatırım Türü Seçiniz:</p>
+                            {Object.entries(yatirimTuru.tip).map((type)=>(
+                                <label >
+                                    <input
+                                        type="radio"
+                                        value={type[0]}
+                                        checked={selectedYatirimTuru === type[0]}
+                                        onChange={yatirimTuruChange}
+                                    />
+                                    <span>{type[1].text}</span>
                                 </label>
-                                <label htmlFor="kar">
-                                    <input id="kar" type="radio" name="step" value="kar" checked={step === "kar"} onChange={changeHandler}/>
-                                    <span>Kar/Zarar Hesabı</span>
-                                </label>
-                            </div>
-                            <div className={step == "maliyet" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="mpiece">
-                                    <input id="mpiece" className="share-input" type="number" placeholder="Alınan hisse miktarı" {...register("mpiece", {required:"Bu alan gereklidir!"})}/>
-                                    {errors.mpiece && <span>{errors.mpiece.message}</span>}
-                                </label>
-                                <label htmlFor="mprice">
-                                    <input id="mprice" className="share-input" type="number" placeholder="Hisse fiyatı" {...register("mprice",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.mprice && <span>{errors.mprice.message}</span>}
-                                </label>
-                                <label htmlFor="mprocess">
-                                    <input id="mprocess" className="share-input" type="number" placeholder="İşlem ücreti (varsa)" {...register("mprocess",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.mprocess && <span>{errors.mprocess.message}</span>}
-                                </label>
-                            </div>
-                            <div className={step == "deger" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="dpiece">
-                                    <input id="dpiece" className="share-input" type="number" placeholder="Mevcut hisse miktarı" {...register("dpiece", {required:"Bu alan gereklidir!"})}/>
-                                    {errors.dpiece && <span>{errors.dpiece.message}</span>}
-                                </label>
-                                <label htmlFor="dprice">
-                                    <input id="dprice" className="share-input" type="number" placeholder="Güncel hisse fiyatı" {...register("dprice",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.dprice && <span>{errors.dprice.message}</span>}
-                                </label>
-                                <label htmlFor="own">
-                                    <input id="own" className="share-input" type="number" placeholder="Nakit" {...register("own",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.own && <span>{errors.own.message}</span>}
-                                </label>
-                            </div>
-                            <div className={step == "kar" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="sales">
-                                    <input id="sales" className="share-input" type="number" placeholder="Satış fiyatı" {...register("sales", {required:"Bu alan gereklidir!"})}/>
-                                    {errors.sales && <span>{errors.sales.message}</span>}
-                                </label>
-                                <label htmlFor="buying">
-                                    <input id="buying" className="share-input" type="number" placeholder="Alış fiyatı" {...register("buying",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.buying && <span>{errors.buying.message}</span>}
-                                </label>
-                                <label htmlFor="kpiece">
-                                    <input id="kpiece" className="share-input" type="number" placeholder="Satılan hisse miktarı" {...register("kpiece",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.kpiece && <span>{errors.kpiece.message}</span>}
-                                </label>
-                                <label htmlFor="kprocess">
-                                    <input id="kprocess" className="share-input" type="number" placeholder="İşlem ücretleri (Varsa)" {...register("kprocess",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.kprocess && <span>{errors.kprocess.message}</span>}
-                                </label>
-                            </div>
+                            ))}
                         </div>
-                        <div className={type == "uzun" ? "flex flex-col w-3/5 justify-center gap-y-3" : "hidden"}>
-                            <div className="flex flex-col items-center gap-y-2">
-                            <p>Vade türü seçiniz:</p>
-                                <label htmlFor="year">
-                                    <input id="year" type="radio" name="step" value="year" checked={step === "year"} onChange={changeHandler}/>
-                                    <span>Yıl</span>
-                                </label>
-                                <label htmlFor="month">
-                                    <input id="month" type="radio" name="step" value="month" checked={step === "month"} onChange={changeHandler}/>
-                                    <span>Ay</span>
-                                </label>
-                            </div>
-                            <div className={step == "year" ? "flex flex-col gap-y-3" : "hidden"}>
-                                <label htmlFor="ymoney">
-                                    <input id="ymoney" className="share-input" type="number" placeholder="Ana para" {...register("ymoney",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.ymoney && <span>{errors.ymoney.message}</span>}
-                                </label>
-                                <label htmlFor="yrate">
-                                    <input id="yrate" className="share-input" type="number" placeholder="Getiri Oranı (r)" {...register("yrate",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.yrate && <span>{errors.yrate.message}</span>}
-                                </label>
-                                <label htmlFor="ytime">
-                                    <input id="ytime" className="share-input" type="number" placeholder="Yatırım süresi (Yıl)" {...register("ytime",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.ytime && <span>{errors.ytime.message}</span>}
-                                </label>
-                            </div>
-                            <div className={step == "month" ? "flex flex-col gap-y-3    " : "hidden"}>
-                            <label htmlFor="money">
-                                    <input id="money" className="share-input" type="number" placeholder="Ana para" {...register("money",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.money && <span>{errors.money.message}</span>}
-                                </label>
-                                <label htmlFor="rate">
-                                    <input id="rate" className="share-input" type="number" placeholder="Getiri oranı (r)" {...register("rate",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.rate && <span>{errors.rate.message}</span>}
-                                </label>
-                                <label htmlFor="period">
-                                    <input id="period" className="share-input" type="number" placeholder="Dönem sayısı (d)" {...register("period",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.period && <span>{errors.period.message}</span>}
-                                </label>
-                                <label htmlFor="time">
-                                    <input id="time" className="share-input" type="number" placeholder="Yatırım süresi (t)" {...register("time",{required:"Bu alan gereklidir!"})}/>
-                                    {errors.time && <span>{errors.time.message}</span>}
-                                </label>
-                            </div>
+                        <div>
+                            <p>İşlem Türünü Seçiniz:</p>
+                            {!yatirimData || !yatirimData.islemler ? (
+                                <p>Tür Seçilmedi</p>
+                            ) : (
+                                Object.entries(yatirimData.islemler).map(([key, step]) => (
+                                    <label key={key}>
+                                        <input
+                                            type="radio"
+                                            value={key}
+                                            checked={selectedIslem === key}
+                                            onChange={islemTuruChange}
+                                        />
+                                        <span>{step.text}</span>
+                                    </label>
+                                ))
+                            )}
                         </div>
-                        <p>{result == null ? "Henüz hesaplama yapılmadı" : `Sonuç: ${result}₺`}</p>
-                        <div className={type != null && step != null ? "flex flex-col gap-y-3 sm:gap-y-0 sm:flex-row w-3/5 sm:justify-between" : "hidden"}>
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
-                            <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={geri}>Geri</button>
-                            <button className="bg-lime-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={kontrol}>Kontrol</button>
-                            <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
+                        <div>
+                            
                         </div>
                     </form>
-                    
+                    <button type="button" onClick={test}>Test</button>
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>
