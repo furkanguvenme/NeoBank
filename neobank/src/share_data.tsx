@@ -83,7 +83,8 @@ interface ShareData {
         }
       }
     },
-    inputs:{maliyet: {
+    inputs:{
+      maliyet: {
       input1: {
         key: "maliyet_input1",
         type: "alinanHisse",

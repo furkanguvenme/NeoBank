@@ -19,8 +19,8 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <nav className="flex flex-row gap-5 lg:gap-10 items-center">
         <a className="navigation" onClick={() => onClick("/")}>Ana Sayfa</a>
         <HiHome className="icon" onClick={() => onClick("/")} />
-        <a className="navigation" onClick={() => onClick("/hakkimda")}>Hakkımda</a>
-        <BsInfoSquareFill className="icon" onClick={() => onClick("/hakkimda")} />
+        <a className="navigation" onClick={() => onClick("/aboutme")}>Hakkımda</a>
+        <BsInfoSquareFill className="icon" onClick={() => onClick("/aboutme")} />
         <a className="navigation">İşlemler</a>
         <GiProcessor className="icon" />
         <a className="navigation" href="mailto:furkanguven.dev@gmail.com">İletişim</a>

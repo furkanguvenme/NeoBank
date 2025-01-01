@@ -44,6 +44,7 @@ export const Share = () => {
 
     const [selectedYatirimTuru, setSelectedYatirimTuru] = useState<string | null>(null);
     const [selectedIslem, setSelectedIslem] = useState<string | null>(null);
+    const [result, setResult] = useState<number | null>();
 
     const indexFind = (type: string | null): typeof yatirimTuru.tip[keyof typeof yatirimTuru.tip] | undefined => {
         if(selectedYatirimTuru != null){
@@ -53,30 +54,91 @@ export const Share = () => {
 
     const yatirimData = indexFind(selectedYatirimTuru);
 
+    const findIslem = (islem: string | null): typeof inputs[keyof typeof inputs] | undefined => {
+        if(selectedIslem != null){
+            const key = Object.keys(inputs).find((key)=> key === islem) as keyof typeof inputs | undefined;
+            return key ? inputs[key] : undefined;
+        }
+    }
+
+    const islemData = findIslem(selectedIslem);
+
     const yatirimTuruChange = (event: React.ChangeEvent<HTMLInputElement>):void =>{
         setSelectedYatirimTuru(event.target.value);
+        reset();
+        setResult(null);
+        setSelectedIslem(null);
     }
 
     const islemTuruChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
         setSelectedIslem(event.target.value);
-    }
-    
-    const test = () =>{
-        console.log(selectedYatirimTuru);
-        console.log(selectedIslem);
+        reset();
+        setResult(null);
     }
 
+    const hesapla = (data: Inputs):void => {
+        console.log("Yapılacak olan işlem " + selectedIslem);
+        console.log("İşlem sonucu: " + result);
+        switch(selectedIslem) {
+            case "maliyet": {
+                    console.log("Valla girdi!");
+                    const sonuc = ((data.alinanHisse*data.hisseFiyati) + Number(data.islemUcreti));
+                    setResult(sonuc);
+                break;
+            }
+            case "deger": {
+                const sonuc = data.mevcutHisse*data.güncelFiyat + Number(data.nakit);
+                setResult(sonuc);
+                break;
+            }
+            case "kar": {
+                const sonuc = (data.satisFiyati - data.alisFiyati)*data.satilanHisse - data.islemTutari;
+                setResult(sonuc);
+                break;
+            }
+            case "year": {
+
+                const sonuc = data.yilPara*Math.pow((1 + Number(data.yilOran)), data.yil);
+                setResult(sonuc);
+
+                break;
+            }
+            case "month": {
+                const sonuc = data.ayPara*Math.pow((1 + Number(data.ayOran / data.donemSayisi)), (data.donemSayisi*(data.ay/12)));
+                setResult(sonuc);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    const sifirla = () => {
+        reset();
+        setResult(null);
+    }
+    
+    // const test = () =>{
+    //     console.log(selectedYatirimTuru);
+    //     console.log(selectedIslem);
+    //     console.log(islemData);
+    //     console.log(result);
+    // }
+    // watch("alinanHisse");
+    // watch("hisseFiyati");
+    // watch("islemUcreti");
   return (
     <>
         <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
             <div className="w-4/5 grid lg:grid-cols-2 grid-cols-1 grid-flow-row gap-6">
-                <div className="share-content">
-                    <form onSubmit={handleSubmit()}>
-                        <div>
+                <div className="share-content py-7 w-full flex flex-col justify-center items-center">
+                    <form className="flex  flex-col w-4/5 justify-center gap-5 items-center" onSubmit={handleSubmit(hesapla)}>
+                        <div className="flex flex-col w-full gap-5">
                             <p>Yatırım Türü Seçiniz:</p>
+                            <div className="flex flex-col lg:flex-row gap-2">
                             {Object.entries(yatirimTuru.tip).map((type)=>(
-                                <label >
+                                <label className="flex gap-1">
                                     <input
                                         type="radio"
                                         value={type[0]}
@@ -86,14 +148,16 @@ export const Share = () => {
                                     <span>{type[1].text}</span>
                                 </label>
                             ))}
+                            </div>
                         </div>
-                        <div>
+                        <div className="flex flex-col w-full gap-5">
                             <p>İşlem Türünü Seçiniz:</p>
+                            <div className="flex flex-col lg:flex-row gap-2">
                             {!yatirimData || !yatirimData.islemler ? (
-                                <p>Tür Seçilmedi</p>
+                                <p className="text-red-800 font-bold">Yatırım Türü Seçilmedi!</p>
                             ) : (
                                 Object.entries(yatirimData.islemler).map(([key, step]) => (
-                                    <label key={key}>
+                                    <label key={key} className="flex gap-1">
                                         <input
                                             type="radio"
                                             value={key}
@@ -104,12 +168,40 @@ export const Share = () => {
                                     </label>
                                 ))
                             )}
+                            </div>
                         </div>
-                        <div>
-                            
+                        <div className="w-full flex flex-col gap-5">
+                        {islemData == null ? (
+                            <p className="text-red-800 font-bold">İşlem Türü Seçilmedi!</p>
+                            ) : (
+                            Object.entries(islemData).map((islem) => (
+                                <label htmlFor={islem[1].type} key={islem[1].key}>
+                                <input
+                                    id={islem[1].type}
+                                    step="0.00001"
+                                    type="number"
+                                    className="share-input"
+                                    placeholder={islem[1].holder}
+                                    {...register(islem[1].type as "alinanHisse" | "hisseFiyati" | "islemUcreti" | "mevcutHisse" | "güncelFiyat" | "nakit" | "satisFiyati" | "alisFiyati" | "satilanHisse" | "islemTutari" | "yilPara" | "yilOran" | "donemSayisi" | "ay", {
+                                    required: "Bu alan gereklidir!",
+                                    })}
+                                />
+                                {errors[islem[1].type as keyof Inputs]?.message && (
+                                    <span className="flex mt-1 text-red-800 font-bold">
+                                    {errors[islem[1].type as keyof Inputs]?.message}
+                                    </span>
+                                )}
+                                </label>
+                            ))
+                            )}
+                            <div className="w-full flex justify-between">
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                                <button className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
+                            </div>
                         </div>
+                        <p>{result == null ? "Henüz işlem yapılmadı!" : `Toplam tutar: ${result.toFixed(2)} ₺`}</p>
                     </form>
-                    <button type="button" onClick={test}>Test</button>
+                    {/* <button type="button" onClick={test}>Test</button> */}
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>
