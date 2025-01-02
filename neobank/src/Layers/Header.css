@@ -1,7 +1,7 @@
 .navigation {
-  @apply hidden lg:block no-underline text-xl text-lime-600 font-bold cursor-pointer;
+  @apply hidden lg:block no-underline text-xl text-blue-500 font-bold cursor-pointer;
 }
 
 .icon {
-  @apply lg:hidden text-lime-600 cursor-pointer;
+  @apply lg:hidden text-blue-500 cursor-pointer;
 }

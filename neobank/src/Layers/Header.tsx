@@ -2,7 +2,6 @@ import logo from '../assets/logo.png';
 import logok from '../assets/logok.png';
 import { HiHome } from "react-icons/hi";
 import { BsInfoSquareFill } from "react-icons/bs";
-import { GiProcessor } from "react-icons/gi";
 import { FaPhoneSquareAlt } from "react-icons/fa";
 import './Header.css';
 
@@ -21,8 +20,6 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
         <HiHome className="icon" onClick={() => onClick("/")} />
         <a className="navigation" onClick={() => onClick("/aboutme")}>Hakkımda</a>
         <BsInfoSquareFill className="icon" onClick={() => onClick("/aboutme")} />
-        <a className="navigation">İşlemler</a>
-        <GiProcessor className="icon" />
         <a className="navigation" href="mailto:furkanguven.dev@gmail.com">İletişim</a>
         <FaPhoneSquareAlt className="icon" onClick={() => window.location.href = "mailto:furkanguven.dev@gmail.com"}/>
       </nav>

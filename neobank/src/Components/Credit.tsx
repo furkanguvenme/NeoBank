@@ -209,7 +209,7 @@ export const Credit = () => {
                         </ul><br/>
                         <h4>Örnek:</h4>
                         <p>10.000 TL kredi, aylık %1,5 faiz ve 12 ay vade:</p>
-                        <div className="flex justify-center items-center py-7">
+                        <div className="flex flex-col lg:flex-row justify-center lg:items-center py-7">
                             <p>Taksit = </p>
                             <div className="flex flex-col justify-center items-center px-1">
                                 <p className="border-b-2">10.000 x 0.015 x (1 + 0.015)<sup>12</sup></p>

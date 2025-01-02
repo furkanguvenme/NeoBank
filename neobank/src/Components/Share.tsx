@@ -176,6 +176,7 @@ export const Share = () => {
                             ) : (
                             Object.entries(islemData).map((islem) => (
                                 <label htmlFor={islem[1].type} key={islem[1].key}>
+                                <span className="flex mb-2">{islem[1].holder} :</span>
                                 <input
                                     id={islem[1].type}
                                     step="0.00001"

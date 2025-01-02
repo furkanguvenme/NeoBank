@@ -1,19 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Slider.css'; // Stil için ayrı bir CSS dosyası ekleyebilirsiniz.
-import foto from '../assets/bankbanner.jpg';
-import foto2 from '../assets/bankbanner2.jpg';
-import foto3 from '../assets/bankbanner3.jpg';
+import './Slider.css';
+import simpleInterestImg from '../assets/simple-interest.jpg';
+import compoundInterestImg from '../assets/compound-interest.jpg';
+import loanImg from '../assets/loan.jpg';
+import stockSimulationImg from '../assets/stock-simulation.jpg';
 
 interface Slide {
   id: number;
+  title: string;
+  description: string;
   imageUrl: string;
-  text1: string;
 }
 
 const slidesData: Slide[] = [
-  { id: 1, imageUrl: foto, text1: "FAİZ HESAPLAMA" },
-  { id: 2, imageUrl: foto2, text1: "DÖVİZ İŞLEMLERİ" },
-  { id: 3, imageUrl: foto3, text1: "VE DAHA FAZLASI" },
+  {
+    id: 1,
+    title: 'Basit Faiz Hesabı',
+    description: 'Faiz hesaplamada en temel yöntem olan basit faiz ile kısa vadeli yatırımlarınızda kazancınızı net bir şekilde hesaplayın. Bu yöntem, yatırım başlangıcında anapara üzerinden hesaplanan sabit bir faiz oranı kullanır.',
+    imageUrl: simpleInterestImg,
+  },
+  {
+    id: 2,
+    title: 'Bileşik Faiz Hesabı',
+    description: 'Bileşik faiz yöntemiyle, hem anaparadan hem de önceki dönemlerde kazanılan faizden gelir elde edin. Uzun vadeli yatırımlarınızda büyüme etkisini artırarak büyük kazançlar sağlayabilirsiniz.',
+    imageUrl: compoundInterestImg,
+  },
+  {
+    id: 3,
+    title: 'Kredi Hesabı',
+    description: 'Aylık taksitlerinizi, toplam geri ödemenizi ve faiz yükünüzü detaylı bir şekilde hesaplayarak, kredi planlamanızı güvenle yapabilirsiniz. Hangi kredi türünün sizin için uygun olduğunu öğrenin.',
+    imageUrl: loanImg,
+  },
+  {
+    id: 4,
+    title: 'Hisse Senedi Simülasyonu',
+    description: 'Hisse senedi piyasasında nasıl kazanç sağlanacağını anlamak için simülasyon yaparak stratejilerinizi test edin. Riskleri öğrenin ve yatırımlarınızı en iyi şekilde yönetin.',
+    imageUrl: stockSimulationImg,
+  },
 ];
 
 const Slider: React.FC = () => {
@@ -22,27 +45,17 @@ const Slider: React.FC = () => {
 
   const showSlide = (index: number): void => {
     const totalSlides = slidesData.length;
-
     if (index >= totalSlides) setCurrentIndex(0);
     else if (index < 0) setCurrentIndex(totalSlides - 1);
     else setCurrentIndex(index);
   };
 
-  const nextSlide = (): void => {
-    showSlide(currentIndex + 1);
-  };
+  const nextSlide = (): void => showSlide(currentIndex + 1);
+  const prevSlide = (): void => showSlide(currentIndex - 1);
 
-  const prevSlide = (): void => {
-    showSlide(currentIndex - 1);
-  };
-
-  // Otomatik kaydırma
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(interval); 
+    const interval = setInterval(() => nextSlide(), 5000);
+    return () => clearInterval(interval);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -54,17 +67,22 @@ const Slider: React.FC = () => {
 
   return (
     <div className="slider-container">
-      <div className="slider" ref={sliderRef}>
-        {slidesData.map((slide) => (
-          <div className="slide" key={slide.id}>
-            <img src={slide.imageUrl} alt={`Slide ${slide.id}`} />
-            <p className='lg:text-4xl text-base'>{slide.text1}</p>
-          </div>
-        ))}
-      </div>
       <button className="prev-btn" onClick={prevSlide}>
         ⟨
       </button>
+      <div className="slider" ref={sliderRef}>
+        {slidesData.map((slide) => (
+          <div className="slide" key={slide.id}>
+            <div className="slide-content">
+              <img src={slide.imageUrl} alt={slide.title} />
+              <div className="text-content">
+                <h2>{slide.title}</h2>
+                <p>{slide.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
       <button className="next-btn" onClick={nextSlide}>
         ⟩
       </button>
