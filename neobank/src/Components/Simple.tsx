@@ -68,7 +68,7 @@ export const Simple = () => {
                 </form>
                 <div className="py-5 flex flex-col gap-3">
                   <h3>Hesaplanan Faiz Miktarı:</h3>
-                  <p className="flex justify-center">{result?.toFixed(2)} ₺</p>
+                  <p className="flex justify-center">{result == null ? "Henüz işlem yapılmadı!!" : `${result?.toFixed(2)} ₺`}</p>
                 </div>
                 </div>
                 <div className="simple-content p-10 flex flex-col justify-center">
