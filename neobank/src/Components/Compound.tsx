@@ -102,7 +102,7 @@ export const Compound = () => {
                     </form>
                     <div>
                         <p>hesaplanan Faiz Miktarı:</p>
-                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : result}</p>
+                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : result?.toFixed(2)}</p>
                     </div>
                 </div>
                 <div className="compound-content p-10 flex flex-col justify-center">
