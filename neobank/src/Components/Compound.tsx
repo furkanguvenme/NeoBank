@@ -88,7 +88,7 @@ export const Compound = () => {
                         {errors.money && <span>{errors.money.message}</span>}
 
                         <label htmlFor="rate"></label>
-                        <input id="rate" type="number" className="compound-input" placeholder="Faiz oranı %15 ise 0.15" step="0.0001"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
+                        <input id="rate" type="number" className="compound-input" placeholder="Oran (%15 ise 0.15)" step="0.0001"{...register("rate", {required:"Bu alan gereklidir!"})}></input>
                         {errors.rate && <span>{errors.rate.message}</span>}
 
                         <label htmlFor="time"></label>
@@ -96,8 +96,8 @@ export const Compound = () => {
                         {errors.time && <span>{errors.time.message}</span>}
 
                         <div  className="flex w-full justify-between">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
-                            <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
+                            <button className="bg-blue-500 text-white px-2 lg:px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                            <button className="bg-gray-500 text-white px-2 lg:px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
                     <div>

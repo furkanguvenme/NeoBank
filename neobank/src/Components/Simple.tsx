@@ -50,20 +50,20 @@ export const Simple = () => {
                 <div className="simple-content flex flex-col items-center justify-center py-7">
                 <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                   <label className="w-full" htmlFor="mainMoney">Ana Para:</label>
-                  <input className="simple-input" type="number" id="mainMoney" {...register("money", {required: "Bu alan gereklidir!"})} />
+                  <input className="simple-input" type="number" id="mainMoney" placeholder="Ana Para" {...register("money", {required: "Bu alan gereklidir!"})} />
                   {errors.money && <span>{errors.money.message}</span>}
 
                   <label className="w-full" htmlFor="rate">Faiz Oranı:</label>
-                  <input className="simple-input" type="number" id="rate" step="0.0001" {...register("rate", { required: "Bu alan gereklidir!" })} />
+                  <input className="simple-input" type="number" id="rate" step="0.0001" placeholder="Oran (%15 ise 0.15)" {...register("rate", { required: "Bu alan gereklidir!" })} />
                   {errors.rate && <span>{errors.rate.message}</span>}
 
                   <label className="w-full" htmlFor="time">Faiz Süresi (Yıl):</label>
-                  <input className="simple-input" type="number" id="time" {...register("time", {required: "Bu alan gereklidir!"})}></input>
+                  <input className="simple-input" type="number" id="time" placeholder="Süre (Yıl)" {...register("time", {required: "Bu alan gereklidir!"})}></input>
                   {errors.time && <span>{errors.time.message}</span>}
 
                   <div className="flex w-full justify-between">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
-                    <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
+                    <button className="bg-blue-500 text-white px-2 lg:px-4 py-2 rounded hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                    <button className="bg-gray-500 text-white px-2 lg:px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                   </div>
                 </form>
                 <div className="py-5 flex flex-col gap-3">

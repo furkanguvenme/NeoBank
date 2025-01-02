@@ -196,8 +196,8 @@ export const Share = () => {
                             ))
                             )}
                             <div className="w-full flex justify-between">
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition" type="submit">Hesapla</button>
-                                <button className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
+                                <button className="bg-blue-500 text-white px-2 lg:px-4 py-2 rounded-md hover:bg-blue-600 transition" type="submit">Hesapla</button>
+                                <button className="bg-gray-500 text-white px-2 lg:px-4 py-2 rounded-md hover:bg-gray-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                             </div>
                         </div>
                         <p>{result == null ? "Henüz işlem yapılmadı!" : `Toplam tutar: ${result.toFixed(2)} ₺`}</p>
