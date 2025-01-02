@@ -178,7 +178,7 @@ export const Credit = () => {
                 <p>İlk olarak faiz tipi seçiniz</p>
               ) : type == "sabit" ? (
                 <p>
-                  <strong>Aylık ödemeniz gereken tutar:</strong> {result?.toFixed(2)}₺
+                  <strong>Aylık ödemeniz gereken tutar:</strong> {result == null ? "Henüz işlem yapılmadı!" : `${result?.toFixed(2)} ₺`}
                 </p>
               ) : (
                 Object.entries(odemePlani).map(([key, value]) => (

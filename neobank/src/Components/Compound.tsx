@@ -57,7 +57,7 @@ export const Compound = () => {
                 <div className="compound-content flex flex-col items-center justify-center py-7">
                     <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                     <p>Lütfen zaman türü seçiniz!</p>
-                        <div>
+                        <div className="flex gap-3">
                             <label htmlFor="year">
                             <input
                                 type="radio"
@@ -101,8 +101,8 @@ export const Compound = () => {
                         </div>
                     </form>
                     <div>
-                        <p>hesaplanan Faiz Miktarı:</p>
-                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : result?.toFixed(2)}</p>
+                        <p>Hesaplanan Faiz Miktarı:</p>
+                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : `${result?.toFixed(2)} ₺`}</p>    
                     </div>
                 </div>
                 <div className="compound-content p-10 flex flex-col justify-center">
