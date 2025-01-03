@@ -46,7 +46,7 @@ export const Simple = () => {
     <>
         <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
-            <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6 lg:my-5">
+            <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6 lg:my-8">
                 <div className="simple-content flex flex-col items-center justify-center py-7">
                 <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                   <label className="w-full" htmlFor="mainMoney">Ana Para:</label>
