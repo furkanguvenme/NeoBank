@@ -52,7 +52,7 @@ export const Aboutme = () => {
     ];
 
     return (
-        <div className="flex flex-col w-full items-center min-h-screen bg-gray-50">
+        <div className="flex flex-col w-full items-center min-h-screen">
             <Header onClick={onClick}/>
             <main className="w-full max-w-6xl px-4 py-12 space-y-12">
                 <AboutMeHeader 

@@ -53,33 +53,33 @@ export const Compound = () => {
     <>
         <div className="w-full h-full flex flex-col items-center">
             <Header onClick={onClick}/>
-            <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6">
+            <div className="w-4/5 h-3/5 grid lg:grid-cols-2 grid-cols-1 gap-6 lg:my-2">
                 <div className="compound-content flex flex-col items-center justify-center py-7">
                     <form className="flex flex-col gap-4 w-3/5 items-center justify-center" onSubmit={handleSubmit(hesapla)}>
                     <p>Lütfen zaman türü seçiniz!</p>
                         <div className="flex gap-3">
-                            <label htmlFor="year">
-                            <input
-                                type="radio"
-                                id="year"
-                                name="type"
-                                value="year"
-                                checked={type === "year"}
-                                onChange={handleChange}
+                            <label htmlFor="year" className="flex gap-1">
+                                <input
+                                    type="radio"
+                                    id="year"
+                                    name="type"
+                                    value="year"
+                                    checked={type === "year"}
+                                    onChange={handleChange}
 
-                            />
-                            <span>Yıl</span>
+                                />
+                                <span>Yıl</span>
                             </label>
-                            <label htmlFor="month">
-                            <input
-                                type="radio"
-                                id="month"
-                                name="type"
-                                value="month"
-                                checked={type === "month"}
-                                onChange={handleChange}
-                            />
-                            <span>Ay</span>
+                            <label htmlFor="month" className="flex gap-1">
+                                <input
+                                    type="radio"
+                                    id="month"
+                                    name="type"
+                                    value="month"
+                                    checked={type === "month"}
+                                    onChange={handleChange}
+                                />
+                                <span>Ay</span>
                             </label>
                         </div>
                         <p>Seçilen zaman türü:<br/> {type == null ? "( Henüz seçim yapılmadı )" : type == "year" ? "( Yıl )" : "( Ay )"}</p>
@@ -102,7 +102,7 @@ export const Compound = () => {
                     </form>
                     <div>
                         <p>Hesaplanan Faiz Miktarı:</p>
-                        <p>{type == null ? "İlk olarak bir zaman türü seçiniz." : `${result?.toFixed(2)} ₺`}</p>    
+                        <p>{type == null ? "Henüz bir işlem yapılmadı !" : `${result?.toFixed(2)} ₺`}</p>    
                     </div>
                 </div>
                 <div className="compound-content p-10 flex flex-col justify-center">
