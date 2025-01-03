@@ -69,7 +69,7 @@ interface ShareData {
         },
         vadeli: {
           type:"vadeli",
-          text:"Uzun vadeli Yatırım Simülasyonu",
+          text:"Uzun Vadeli Yatırım Simülasyonu",
           islemler: {
             year: {
               isim:"year",

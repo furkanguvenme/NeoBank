@@ -183,7 +183,7 @@ export const Credit = () => {
               ) : (
                 Object.entries(odemePlani).map(([key, value]) => (
                   <div key={key} className="text-sm text-white">
-                    {`${key}: ${value}₺`}
+                    {`${key}: ${value} ₺`}
                   </div>
                 ))
               )}

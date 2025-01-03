@@ -77,8 +77,6 @@ export const Share = () => {
     }
 
     const hesapla = (data: Inputs):void => {
-        console.log("Yapılacak olan işlem " + selectedIslem);
-        console.log("İşlem sonucu: " + result);
         switch(selectedIslem) {
             case "maliyet": {
                     console.log("Valla girdi!");
@@ -118,15 +116,6 @@ export const Share = () => {
         setResult(null);
     }
     
-    // const test = () =>{
-    //     console.log(selectedYatirimTuru);
-    //     console.log(selectedIslem);
-    //     console.log(islemData);
-    //     console.log(result);
-    // }
-    // watch("alinanHisse");
-    // watch("hisseFiyati");
-    // watch("islemUcreti");
   return (
     <>
         <div className="w-full h-full flex flex-col items-center">
@@ -202,7 +191,6 @@ export const Share = () => {
                         </div>
                         <p>{result == null ? "Henüz işlem yapılmadı!" : `Toplam tutar: ${result.toFixed(2)} ₺`}</p>
                     </form>
-                    {/* <button type="button" onClick={test}>Test</button> */}
                 </div>
                 <div className="share-content lg:p-10 p-6">
                     <h2 className="text-2xl">Hisse Senedi Yatırım Simülasyonu</h2>

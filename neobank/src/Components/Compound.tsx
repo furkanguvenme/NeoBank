@@ -100,7 +100,7 @@ export const Compound = () => {
                             <button className="bg-gray-500 text-white px-2 lg:px-4 py-2 rounded hover:bg-blue-600 transition" type="button" onClick={sifirla}>Sıfırla</button>
                         </div>
                     </form>
-                    <div>
+                    <div className="flex flex-col items-center">
                         <p>Hesaplanan Faiz Miktarı:</p>
                         <p>{type == null ? "Henüz bir işlem yapılmadı !" : `${result?.toFixed(2)} ₺`}</p>    
                     </div>
